@@ -1,0 +1,67 @@
+ 
+****************************************
+Report : cell
+Design : bypass_ctr
+Version: T-2022.03-SP3
+Date   : Mon Jun 10 12:55:36 2024
+****************************************
+
+Attributes:
+    b - black box (unknown)
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    u - contains unmapped logic
+
+Cell                      Reference       Library             Area  Attributes
+--------------------------------------------------------------------------------
+U20                       NOR2X1          gscl45nm        2.346500  
+U21                       OAI21X1         gscl45nm        2.815800  
+U22                       NOR3X1          gscl45nm        2.815800  
+U24                       NOR3X1          gscl45nm        2.815800  
+U26                       NOR3X1          gscl45nm        2.815800  
+U29                       NAND3X1         gscl45nm        2.346500  
+U30                       NOR3X1          gscl45nm        2.815800  
+U32                       OAI21X1         gscl45nm        2.815800  
+U35                       OR2X1           gscl45nm        2.346500  
+U36                       OR2X1           gscl45nm        2.346500  
+U37                       OR2X1           gscl45nm        2.346500  
+U38                       OR2X1           gscl45nm        2.346500  
+U39                       OR2X1           gscl45nm        2.346500  
+U40                       OR2X1           gscl45nm        2.346500  
+U41                       INVX1           gscl45nm        1.407900  
+U42                       OR2X1           gscl45nm        2.346500  
+U43                       INVX1           gscl45nm        1.407900  
+U44                       OR2X1           gscl45nm        2.346500  
+U45                       INVX1           gscl45nm        1.407900  
+U46                       OR2X1           gscl45nm        2.346500  
+U47                       INVX1           gscl45nm        1.407900  
+U48                       OR2X1           gscl45nm        2.346500  
+U49                       INVX1           gscl45nm        1.407900  
+U50                       BUFX2           gscl45nm        2.346500  
+U51                       BUFX2           gscl45nm        2.346500  
+U52                       BUFX2           gscl45nm        2.346500  
+U53                       BUFX2           gscl45nm        2.346500  
+U54                       BUFX2           gscl45nm        2.346500  
+U55                       BUFX2           gscl45nm        2.346500  
+U56                       INVX1           gscl45nm        1.407900  
+U57                       INVX1           gscl45nm        1.407900  
+U58                       BUFX2           gscl45nm        2.346500  
+U59                       BUFX2           gscl45nm        2.346500  
+U60                       BUFX2           gscl45nm        2.346500  
+U61                       INVX1           gscl45nm        1.407900  
+U62                       INVX1           gscl45nm        1.407900  
+U63                       INVX1           gscl45nm        1.407900  
+U64                       INVX1           gscl45nm        1.407900  
+U65                       INVX1           gscl45nm        1.407900  
+cnt_reg[0]                DFFSR           gscl45nm        10.324600 n
+cnt_reg[1]                DFFSR           gscl45nm        10.324600 n
+cnt_reg[2]                DFFSR           gscl45nm        10.324600 n
+cnt_reg[3]                DFFSR           gscl45nm        10.324600 n
+cnt_reg[4]                DFFSR           gscl45nm        10.324600 n
+cnt_reg[5]                DFFSR           gscl45nm        10.324600 n
+cnt_reg[6]                DFFSR           gscl45nm        10.324600 n
+cnt_reg[7]                DFFSR           gscl45nm        10.324600 n
+--------------------------------------------------------------------------------
+Total 47 cells                                            165.662899
+1

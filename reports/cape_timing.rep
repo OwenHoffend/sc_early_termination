@@ -1,0 +1,108 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : cape
+Version: T-2022.03-SP3
+Date   : Mon Jun 10 13:54:50 2024
+****************************************
+
+Operating Conditions: typical   Library: gscl45nm
+Wire Load Model Mode: top
+
+  Startpoint: cnts_reg[2]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: cnts_reg[60]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  cnts_reg[2]/CLK (DFFSR)                  0.00       0.00 r
+  cnts_reg[2]/Q (DFFSR)                    0.11       0.11 f
+  U118/Y (BUFX2)                           0.04       0.15 f
+  U87/Y (AND2X1)                           0.04       0.19 f
+  U294/Y (INVX1)                           0.00       0.20 r
+  U106/Y (OR2X1)                           0.04       0.23 r
+  U293/Y (INVX1)                           0.03       0.26 f
+  U420/Y (AND2X2)                          0.04       0.31 f
+  U144/Y (INVX1)                           0.00       0.31 r
+  U145/Y (NOR3X1)                          0.03       0.34 f
+  U203/Y (INVX1)                           0.01       0.36 r
+  U146/Y (OR2X2)                           0.04       0.39 r
+  U130/Y (INVX1)                           0.01       0.41 f
+  U86/Y (AND2X1)                           0.03       0.44 f
+  U330/Y (INVX1)                           0.01       0.45 r
+  U547/Y (NOR3X1)                          0.02       0.47 f
+  U115/Y (INVX1)                           0.01       0.48 r
+  U116/Y (NOR3X1)                          0.02       0.50 f
+  U568/Y (NAND3X1)                         0.03       0.53 r
+  U120/Y (BUFX2)                           0.03       0.57 r
+  U207/Y (INVX1)                           0.02       0.59 f
+  U571/Y (NAND3X1)                         0.03       0.62 r
+  U121/Y (BUFX2)                           0.03       0.65 r
+  U206/Y (INVX1)                           0.02       0.67 f
+  U574/Y (NAND3X1)                         0.03       0.70 r
+  U151/Y (BUFX2)                           0.04       0.74 r
+  U161/Y (OR2X2)                           0.04       0.77 r
+  U267/Y (INVX2)                           0.03       0.80 f
+  U579/Y (NAND3X1)                         0.03       0.83 r
+  U152/Y (BUFX2)                           0.04       0.86 r
+  U70/Y (INVX2)                            0.03       0.89 f
+  U582/Y (NAND3X1)                         0.03       0.92 r
+  U153/Y (BUFX2)                           0.04       0.96 r
+  U134/Y (INVX1)                           0.02       0.97 f
+  U585/Y (NAND3X1)                         0.03       1.00 r
+  U154/Y (BUFX2)                           0.03       1.04 r
+  U440/Y (INVX1)                           0.02       1.05 f
+  U74/Y (AND2X2)                           0.04       1.09 f
+  U360/Y (INVX1)                           0.00       1.10 r
+  U551/Y (NOR3X1)                          0.02       1.12 f
+  U591/Y (NAND3X1)                         0.03       1.15 r
+  U155/Y (BUFX2)                           0.04       1.19 r
+  U150/Y (INVX2)                           0.03       1.21 f
+  U594/Y (NAND3X1)                         0.03       1.24 r
+  U156/Y (BUFX2)                           0.03       1.28 r
+  U210/Y (INVX1)                           0.02       1.30 f
+  U597/Y (NAND3X1)                         0.03       1.32 r
+  U157/Y (BUFX2)                           0.04       1.36 r
+  U122/Y (NOR3X1)                          0.03       1.39 f
+  U602/Y (NAND3X1)                         0.03       1.42 r
+  U158/Y (BUFX2)                           0.04       1.46 r
+  U162/Y (OR2X2)                           0.04       1.50 r
+  U127/Y (NOR3X1)                          0.02       1.53 f
+  U610/Y (NAND3X1)                         0.03       1.56 r
+  U159/Y (BUFX2)                           0.04       1.60 r
+  U71/Y (OR2X2)                            0.04       1.63 r
+  U549/Y (NOR3X1)                          0.02       1.66 f
+  U617/Y (NAND3X1)                         0.03       1.69 r
+  U160/Y (BUFX2)                           0.04       1.73 r
+  U124/Y (NOR3X1)                          0.02       1.75 f
+  U125/Y (INVX1)                           0.01       1.76 r
+  U139/Y (NOR3X1)                          0.02       1.78 f
+  U140/Y (INVX1)                           0.01       1.79 r
+  U142/Y (INVX1)                           0.02       1.82 f
+  U89/Y (AND2X1)                           0.03       1.85 f
+  U292/Y (INVX1)                           0.01       1.86 r
+  U622/Y (XOR2X1)                          0.05       1.91 r
+  cnts_reg[60]/D (DFFSR)                   0.00       1.91 r
+  data arrival time                                   1.91
+
+  clock clk (rise edge)                    2.00       2.00
+  clock network delay (ideal)              0.00       2.00
+  cnts_reg[60]/CLK (DFFSR)                 0.00       2.00 r
+  library setup time                      -0.08       1.92
+  data required time                                  1.92
+  -----------------------------------------------------------
+  data required time                                  1.92
+  data arrival time                                  -1.91
+  -----------------------------------------------------------
+  slack (MET)                                         0.00
+
+
+1

@@ -1,0 +1,51 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : lfsr_sng
+Version: T-2022.03-SP3
+Date   : Mon Jun 10 13:51:30 2024
+****************************************
+
+Operating Conditions: typical   Library: gscl45nm
+Wire Load Model Mode: top
+
+  Startpoint: Bxs[0][3] (input port clocked by clk)
+  Endpoint: Xs[0] (output port clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  clock clk (rise edge)                    0.00       0.00
+  clock network delay (ideal)              0.00       0.00
+  input external delay                     0.10       0.10 r
+  Bxs[0][3] (in)                           0.02       0.12 r
+  U209/Y (AND2X1)                          0.03       0.14 r
+  U210/Y (INVX1)                           0.03       0.17 f
+  U320/Y (NAND3X1)                         0.04       0.21 r
+  U101/Y (BUFX2)                           0.03       0.24 r
+  U321/Y (OAI21X1)                         0.01       0.25 f
+  U239/Y (INVX1)                           0.01       0.26 r
+  U83/Y (AND2X1)                           0.04       0.30 r
+  U141/Y (INVX1)                           0.02       0.32 f
+  U325/Y (NAND3X1)                         0.03       0.35 r
+  U123/Y (BUFX2)                           0.03       0.39 r
+  U326/Y (NAND2X1)                         0.01       0.40 f
+  Xs[0] (out)                              0.00       0.40 f
+  data arrival time                                   0.40
+
+  clock clk (rise edge)                    2.00       2.00
+  clock network delay (ideal)              0.00       2.00
+  output external delay                   -0.10       1.90
+  data required time                                  1.90
+  -----------------------------------------------------------
+  data required time                                  1.90
+  data arrival time                                  -0.40
+  -----------------------------------------------------------
+  slack (MET)                                         1.50
+
+
+1
