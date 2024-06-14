@@ -24,8 +24,8 @@ end
 endmodule
 
 module cape #(
-    parameter WIDTH = 8,
-    parameter NUM_INPUTS = 8
+    parameter WIDTH = 4,
+    parameter NUM_INPUTS = 2
 )(
     input clk, rst_n,
     input [WIDTH-1:0] Bxs[NUM_INPUTS-1:0],
@@ -63,8 +63,8 @@ end
 endmodule
 
 module cape_ET #(
-    parameter WIDTH = 8,
-    parameter NUM_INPUTS = 8
+    parameter WIDTH = 4,
+    parameter NUM_INPUTS = 2
 )(
     input clk, rst_n,
     input [WIDTH-1:0] Bxs[NUM_INPUTS-1:0],

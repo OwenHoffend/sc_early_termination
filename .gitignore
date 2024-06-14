@@ -14,8 +14,11 @@
 simv
 
 # Generated for Verilog and VHDL top configs
+reports/
+synth/
 simv.daidir/
 syn_simv.daidir/
+syn_simv
 simv.db.dir/
 lib/
 WORK/

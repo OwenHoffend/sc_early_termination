@@ -1,15 +1,16 @@
 `timescale 1ns / 1ps
 
-module cape_tb;
+module lfsr_sng_tb;
 
 // Parameters
-parameter WIDTH = 4;
+parameter WIDTH = 8;
 parameter NUM_INPUTS = 2;
+parameter START_STATE = 1;
 
 // Signals
 logic clk;
 logic rst_n;
-logic [WIDTH-1:0] Bxs[NUM_INPUTS];
+logic [WIDTH-1:0] Bxs[NUM_INPUTS-1:0];
 logic done;
 logic [NUM_INPUTS-1:0] Xs;
 
@@ -20,12 +21,12 @@ always @(posedge clk) begin
     cycle_count += 1.0;
     foreach(Xs[i]) begin
         if(Xs[i]) out_cnts[i] += 1.0;
-        $display("Cycle: %g, ctr: %x, input: %d, pz: %b, SC value: %g", 
-            cycle_count, dut.cnts, i, Xs[i], out_cnts[i] / cycle_count);
+        $display("Cycle: %g, input: %d, pz: %b, SC value: %g", 
+            cycle_count, i, Xs[i], out_cnts[i] / cycle_count);
     end
 end
 
-task begin_SC_test(input [WIDTH-1:0] Bxs_inst[NUM_INPUTS]);
+task begin_SC_test(input [WIDTH-1:0] Bxs_inst[NUM_INPUTS-1:0]);
     Bxs = Bxs_inst;
     out_cnts = '{NUM_INPUTS{0.0}};
     cycle_count = 0.0;
@@ -34,7 +35,10 @@ task begin_SC_test(input [WIDTH-1:0] Bxs_inst[NUM_INPUTS]);
     wait(done);
 endtask
 
-// Instantiate the cape module
+//LFSR doesn't have dedicated done signal
+assign done = (cycle_count == 2.0 ** WIDTH);
+
+// Instantiate the lfsr module
 `ifdef SYNTHESIS
     logic [NUM_INPUTS*WIDTH-1:0] Bxs_flat;
     always_comb begin
@@ -43,22 +47,21 @@ endtask
         end
     end
 
-    cape dut (
+    lfsr_sng dut (
         .clk(clk),
         .rst_n(rst_n),
         .Bxs(Bxs_flat),
-        .done(done),
         .Xs(Xs)
     );
 `else
-    cape #(
+    lfsr_sng #(
         .WIDTH(WIDTH),
-        .NUM_INPUTS(NUM_INPUTS)
+        .NUM_INPUTS(NUM_INPUTS),
+        .START_STATE(START_STATE)
     ) dut (
         .clk(clk),
         .rst_n(rst_n),
         .Bxs(Bxs),
-        .done(done),
         .Xs(Xs)
     );
 `endif
@@ -75,8 +78,14 @@ task reset();
 endtask
 
 initial begin
-    begin_SC_test({{4'b1100}, {4'b1000}}); //3/4, 1/2
-
+    begin_SC_test({
+        {8'b1100_0000}, 
+        {8'b1000_0000}
+    }); //0.75, 0.5
+    begin_SC_test({
+        {8'b0000_0011}, 
+        {8'b0000_0011}
+    }); //3/256, 3/256 (0.01171875)
     $finish;
 end
 

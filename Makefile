@@ -4,8 +4,8 @@ LIB = ./lib/FreePDK45/osu_soc/lib/files/gscl45nm.v
 #Simulation
 MOD_FOLDER = ./rtl
 TB_FOLDER = ./tb
-SYNTH_FOLDER = $(MOD_FOLDER)/synth
-MOD_NAME = lfsr_SNG
+SYNTH_FOLDER = ./synth
+MOD_NAME = cape_ET
 
 SIMFILES = $(wildcard ./$(MOD_FOLDER)/*.sv)
 SIMFILES += verilog-lfsr/rtl/lfsr.v
@@ -24,11 +24,12 @@ remove:
 	rm -f ./simv.daidir/.vcs.timestamp
 	rm -f ./syn_simv.daidir/.vcs.timestamp
 	rm -f ./syn_simv
-	rm -f ./$(SYNTH_FOLDER)/$(MOD_NAME).vh
+	rm -f $(SYNFILE)
 
 $(SYNFILE):
 	dc_shell-t -f compile_dc.tcl
-	mv ./$(MOD_NAME)* ./$(SYNTH_FOLDER)
+	mv ./$(MOD_NAME).vh ./$(SYNTH_FOLDER)
+	mv ./$(MOD_NAME).sdc ./$(SYNTH_FOLDER)
 
 simv:
 	$(VCS) $(TESTBENCH) $(SIMFILES) -o simv +define+SIMULATION
@@ -38,13 +39,13 @@ syn_simv: $(SYNFILE)
 
 syn_only: remove $(SYNFILE)
 
-sim:	remove simv
+sim: remove simv
 	./simv
 
-sim_syn: syn_simv #force rebuild
+sim_syn: remove syn_simv #force rebuild
 	./syn_simv
 
-simv_dve:	$(SIMFILES)	$(TESTBENCH)
+simv_dve: $(SIMFILES) $(TESTBENCH)
 	$(VCS) +memcbk $(TESTBENCH) $(SIMFILES) -o simv_dve -R -gui -kdb
 
 remove_dve:

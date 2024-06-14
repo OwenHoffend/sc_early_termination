@@ -36,17 +36,35 @@ task begin_SC_test(input [WIDTH-1:0] Bxs_inst[NUM_INPUTS]);
 endtask
 
 // Instantiate the cape module
-cape_ET #(
-    .WIDTH(WIDTH),
-    .NUM_INPUTS(NUM_INPUTS)
-) dut (
-    .clk(clk),
-    .rst_n(rst_n),
-    .Bxs(Bxs),
-    .trunc(trunc),
-    .done(done),
-    .Xs(Xs)
-);
+`ifdef SYNTHESIS
+    logic [NUM_INPUTS*WIDTH-1:0] Bxs_flat;
+    always_comb begin
+        foreach(Bxs[i, j]) begin
+            Bxs_flat[i*WIDTH+j] = Bxs[i][j];
+        end
+    end
+
+    cape_ET dut (
+        .clk(clk),
+        .rst_n(rst_n),
+        .Bxs(Bxs_flat),
+        .trunc(trunc),
+        .done(done),
+        .Xs(Xs)
+    );
+`else
+    cape_ET #(
+        .WIDTH(WIDTH),
+        .NUM_INPUTS(NUM_INPUTS)
+    ) dut (
+        .clk(clk),
+        .rst_n(rst_n),
+        .Bxs(Bxs),
+        .trunc(trunc),
+        .done(done),
+        .Xs(Xs)
+    );
+`endif
 
 // Clock generation
 always #5 clk = ~clk;

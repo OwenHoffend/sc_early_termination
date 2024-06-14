@@ -3,7 +3,8 @@
 module lfsr_sng #(
     parameter WIDTH = 8,
     parameter LFSR_POLY = 7'h1D, //x^8 + x^4 + x^3 + x^2 + 1 --> 1 0001 1101 --> 1D (MSB is inferred)
-    parameter NUM_INPUTS = 8
+    parameter START_STATE = 1,
+    parameter NUM_INPUTS = 2
 )(
     input clk, rst_n,
     input [WIDTH-1:0] Bxs[NUM_INPUTS-1:0],
@@ -19,7 +20,7 @@ lfsr #(
     .DATA_WIDTH(1)
 )
 lfsr_inst[NUM_INPUTS-1:0] (
-    .data_in({WIDTH{1'b0}}),
+    .data_in({NUM_INPUTS{1'b0}}),
     .state_in(state_in),
     .data_out(),
     .state_out(state_out)
@@ -28,7 +29,7 @@ lfsr_inst[NUM_INPUTS-1:0] (
 always_ff @(posedge clk or negedge rst_n) begin
     if(!rst_n) begin
         for(integer j=0; j<NUM_INPUTS; j++) begin
-            state_in[j] <= 1;
+            state_in[j] <= START_STATE;
         end
     end else begin
         state_in <= state_out;
@@ -38,7 +39,7 @@ end
 integer i;
 always_comb begin
     for(i=0; i<NUM_INPUTS; i++) begin
-        Xs[i] = state_out[i] > Bxs[i];
+        Xs[i] = state_out[i] < Bxs[i];
     end
 end
 
