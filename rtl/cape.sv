@@ -17,7 +17,7 @@ always_comb begin
         for(j=0; j<WIDTH; j++) begin
             cape_wiring[i][j] = cnts[j*NUM_INPUTS+i];
         end
-        Xs[i] = cape_wiring[i] > Bxs[i];
+        Xs[i] = cape_wiring[i] < Bxs[i];
     end
 end
 
@@ -74,6 +74,7 @@ module cape_ET #(
 );
 
 logic [WIDTH*NUM_INPUTS-1:0] cnts, bp;
+logic [WIDTH-1:0] Bxs_trunc[NUM_INPUTS-1:0];
 logic [WIDTH-1:0] tzds[NUM_INPUTS-1:0];
 logic next_done;
 
@@ -82,7 +83,7 @@ cape_CMP_logic #(
     .NUM_INPUTS(NUM_INPUTS)
 ) c1 (
     .cnts(cnts),
-    .Bxs(Bxs),
+    .Bxs(Bxs_trunc),
     .Xs(Xs)
 );
 
@@ -99,8 +100,7 @@ bypass_ctr #(
 tzd #(
     .WIDTH(WIDTH)
 ) tzd_gen[NUM_INPUTS-1:0] (
-    .Bx(Bxs),
-    .trunc({NUM_INPUTS{trunc}}),
+    .Bx(Bxs_trunc),
     .z(tzds)
 );
 
@@ -115,6 +115,8 @@ end
 integer i, j;
 always_comb begin
     for(i=0; i<NUM_INPUTS; i++) begin
+        Bxs_trunc[i] = Bxs[i] & ~trunc;
+        $display("TZD: %b", tzds[i]);
         for(j=0; j<WIDTH; j++) begin
             bp[j*NUM_INPUTS+i] = tzds[i][j];
         end

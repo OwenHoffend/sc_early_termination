@@ -10,35 +10,35 @@ module lfsr_sng #(
     output logic [NUM_INPUTS-1:0] Xs
 );
 
-logic [WIDTH-1:0] data_in[NUM_INPUTS-1:0];
-logic [WIDTH-1:0] data_out[NUM_INPUTS-1:0];
+logic [WIDTH-1:0] state_in[NUM_INPUTS-1:0];
+logic [WIDTH-1:0] state_out[NUM_INPUTS-1:0];
 
 lfsr #(
     .LFSR_WIDTH(WIDTH),
     .LFSR_POLY(LFSR_POLY),
-    .DATA_WIDTH(WIDTH)
+    .DATA_WIDTH(1)
 )
 lfsr_inst[NUM_INPUTS-1:0] (
-    .data_in(data_in),
-    .state_in(0),
-    .data_out(data_out),
-    .state_out()
+    .data_in({WIDTH{1'b0}}),
+    .state_in(state_in),
+    .data_out(),
+    .state_out(state_out)
 );
 
 always_ff @(posedge clk or negedge rst_n) begin
     if(!rst_n) begin
         for(integer j=0; j<NUM_INPUTS; j++) begin
-            data_in[j] <= 1;
+            state_in[j] <= 1;
         end
     end else begin
-        data_in <= data_out;
+        state_in <= state_out;
     end
 end
 
 integer i;
 always_comb begin
     for(i=0; i<NUM_INPUTS; i++) begin
-        Xs[i] = data_out[i] > Bxs[i];
+        Xs[i] = state_out[i] > Bxs[i];
     end
 end
 

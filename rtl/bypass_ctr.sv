@@ -24,7 +24,7 @@ always_comb begin
     for(i=1; i<WIDTH+1; i++) begin
         carry[i] = carry[i-1] & carry_gen[i-1];
     end
-    next_cnt = carry[WIDTH-1:0] & ~bp;
+    next_cnt = cnt ^ (carry[WIDTH-1:0] & ~bp);
     ovf = carry[WIDTH];
 end
 

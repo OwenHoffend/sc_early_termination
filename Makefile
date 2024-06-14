@@ -3,14 +3,14 @@ LIB = ./lib/FreePDK45/osu_soc/lib/files/gscl45nm.v
 
 #Simulation
 MOD_FOLDER = ./rtl
-#TB_FOLDER = $(MOD_FOLDER)/testbench
+TB_FOLDER = ./tb
 SYNTH_FOLDER = $(MOD_FOLDER)/synth
-MOD_NAME = cape
+MOD_NAME = cape_ET
 
 SIMFILES = $(wildcard ./$(MOD_FOLDER)/*.sv)
 SIMFILES += verilog-lfsr/rtl/lfsr.v
 
-#TESTBENCH = $(TB_FOLDER)/$(MOD_NAME)_tb.sv
+TESTBENCH = $(TB_FOLDER)/$(MOD_NAME)_tb.sv
 
 #Synthesis
 SYNFILE = $(SYNTH_FOLDER)/$(MOD_NAME).vh
