@@ -3,6 +3,10 @@
 *.vpd
 *.evcd
 *.fsdb
+*.sdc
+*.vh
+*.log
+*.svf
 
 # Default name of the simulation executable.  A different name can be
 # specified with this switch (the associated daidir database name is
@@ -13,6 +17,8 @@ simv
 simv.daidir/
 syn_simv.daidir/
 simv.db.dir/
+lib/
+WORK/
 
 # Infrastructure necessary to co-simulate SystemC models with
 # Verilog/VHDL models.  An alternate directory may be specified with this

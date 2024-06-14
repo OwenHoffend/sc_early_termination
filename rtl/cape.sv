@@ -116,7 +116,6 @@ integer i, j;
 always_comb begin
     for(i=0; i<NUM_INPUTS; i++) begin
         Bxs_trunc[i] = Bxs[i] & ~trunc;
-        $display("TZD: %b", tzds[i]);
         for(j=0; j<WIDTH; j++) begin
             bp[j*NUM_INPUTS+i] = tzds[i][j];
         end

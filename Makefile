@@ -5,7 +5,7 @@ LIB = ./lib/FreePDK45/osu_soc/lib/files/gscl45nm.v
 MOD_FOLDER = ./rtl
 TB_FOLDER = ./tb
 SYNTH_FOLDER = $(MOD_FOLDER)/synth
-MOD_NAME = cape_ET
+MOD_NAME = lfsr_SNG
 
 SIMFILES = $(wildcard ./$(MOD_FOLDER)/*.sv)
 SIMFILES += verilog-lfsr/rtl/lfsr.v
