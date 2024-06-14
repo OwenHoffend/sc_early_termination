@@ -9,28 +9,48 @@ module rced(
     assign z = c ? mux1 : mux2;
 endmodule
 
+
+//Unfinished work
+/*
 module rced_full_SC #(
     parameter WIDTH = 8,
     parameter SNG_TYPE = "LFSR"
 )(
     input clk, rst_n,
-    input [WIDTH-1:0] Bxs[3:0]
+    input [WIDTH-1:0] Bxs[3:0],
+    output logic Bz
 );
 
 logic [3:0] Xs;
+logic c;
 
-generate;
+generate
     if(SNG_TYPE == "LFSR") begin
-        
+        lfsr_sng #(
+            .WIDTH(WIDTH),
+            .NUM_INPUTS(4)
+        )(
+
+        );
     end else if(SNG_TYPE == "CAPE") begin
-        
+
     end else begin
         
     end
 endgenerate
 
+logic pz;
+
 rced rc1 (
 
 );
 
+sbc sbc1 (
+    .clk(clk),
+    .rst_n(rst_n),
+    .pz(pz),
+    .Bz(Bz)
+);
+
 endmodule
+*/

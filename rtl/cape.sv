@@ -24,8 +24,8 @@ end
 endmodule
 
 module cape #(
-    parameter WIDTH = 4,
-    parameter NUM_INPUTS = 2
+    parameter WIDTH = 8,
+    parameter NUM_INPUTS = 8
 )(
     input clk, rst_n,
     input [WIDTH-1:0] Bxs[NUM_INPUTS-1:0],
@@ -59,12 +59,44 @@ always_ff @(posedge clk or negedge rst_n) begin
         done <= next_done;
     end
 end
+endmodule
 
+module cape_corr #(
+    parameter WIDTH = 8,
+    parameter NUM_INPUTS = 1
+)(
+    input clk, rst_n,
+    input [WIDTH-1:0] Bxs[NUM_INPUTS-1:0],
+    output logic done,
+    output logic [NUM_INPUTS-1:0] Xs
+);
+
+logic [WIDTH-1:0] cnts, next_cnts;
+logic next_done;
+
+integer i;
+always_comb begin
+    next_cnts = cnts + 1'b1;
+    next_done = cnts[WIDTH-1] & ~next_cnts[WIDTH-1];
+    for(i=0; i<NUM_INPUTS; i++) begin
+        Xs[i] = cnts < Bxs[i];
+    end
+end
+
+always_ff @(posedge clk or negedge rst_n) begin
+    if(!rst_n) begin
+        cnts <= 0;
+        done <= 0;
+    end else begin
+        cnts <= next_cnts;
+        done <= next_done;
+    end
+end
 endmodule
 
 module cape_ET #(
-    parameter WIDTH = 4,
-    parameter NUM_INPUTS = 2
+    parameter WIDTH = 8,
+    parameter NUM_INPUTS = 8
 )(
     input clk, rst_n,
     input [WIDTH-1:0] Bxs[NUM_INPUTS-1:0],
@@ -116,9 +148,66 @@ integer i, j;
 always_comb begin
     for(i=0; i<NUM_INPUTS; i++) begin
         Bxs_trunc[i] = Bxs[i] & ~trunc;
+        //Bxs_trunc[i] = Bxs[i];
         for(j=0; j<WIDTH; j++) begin
             bp[j*NUM_INPUTS+i] = tzds[i][j];
         end
+    end
+end
+
+endmodule
+
+module cape_ET_corr #(
+    parameter WIDTH = 8,
+    parameter NUM_INPUTS = 1
+)(
+    input clk, rst_n,
+    input [WIDTH-1:0] Bxs[NUM_INPUTS-1:0],
+    input [WIDTH-1:0] trunc,
+    output logic done,
+    output logic [NUM_INPUTS-1:0] Xs
+);
+
+logic [WIDTH-1:0] cnts, bp;
+logic [WIDTH-1:0] Bxs_trunc[NUM_INPUTS-1:0];
+logic [WIDTH-1:0] tzds[NUM_INPUTS-1:0];
+logic next_done;
+
+bypass_ctr #(
+    .WIDTH(WIDTH)
+) bpc1 (
+    .clk(clk),
+    .rst_n(rst_n),
+    .bp(bp),
+    .ovf(next_done),
+    .cnt(cnts)
+);
+
+tzd #(
+    .WIDTH(WIDTH)
+) tzd_gen[NUM_INPUTS-1:0] (
+    .Bx(Bxs_trunc),
+    .z(tzds)
+);
+
+always_ff @(posedge clk or negedge rst_n) begin
+    if(!rst_n) begin
+        done <= 0;
+    end else begin
+        done <= next_done;
+    end
+end
+
+integer i, j;
+always_comb begin
+    bp = {WIDTH{1'b1}};
+    for(i=0; i<NUM_INPUTS; i++) begin
+        Bxs_trunc[i] = Bxs[i] & ~trunc;
+        //Bxs_trunc[i] = Bxs[i];
+        for(j=0; j<WIDTH; j++) begin
+            bp[j] &= tzds[i][j];
+        end
+        Xs[i] = cnts < Bxs_trunc[i];
     end
 end
 

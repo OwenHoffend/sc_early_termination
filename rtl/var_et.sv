@@ -1,5 +1,5 @@
 module var_ET #(
-    parameter CTR_WIDTH = 8
+    parameter CTR_WIDTH = 5
 )(
     input clk, rst_n, pz,
     input [CTR_WIDTH-1:0] nmin,
@@ -7,7 +7,7 @@ module var_ET #(
 );
 
 logic next_done, pz_delay, ctr_inc;
-logic [$clog2(CTR_WIDTH)-1:0] ctr, next_ctr;
+logic [CTR_WIDTH-1:0] ctr, next_ctr;
 
 always_ff @(posedge clk or negedge rst_n) begin
     if(!rst_n) begin
@@ -29,4 +29,4 @@ always_comb begin
     next_done = ctr == 0;
 end
 
-endmodule;
+endmodule
