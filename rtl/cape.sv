@@ -96,11 +96,11 @@ endmodule
 
 module cape_ET #(
     parameter WIDTH = 8,
-    parameter NUM_INPUTS = 8
+    parameter NUM_INPUTS = 1
 )(
     input clk, rst_n,
     input [WIDTH-1:0] Bxs[NUM_INPUTS-1:0],
-    input [WIDTH-1:0] trunc,
+    //input [WIDTH-1:0] trunc,
     output logic done,
     output logic [NUM_INPUTS-1:0] Xs
 );
@@ -147,8 +147,8 @@ end
 integer i, j;
 always_comb begin
     for(i=0; i<NUM_INPUTS; i++) begin
-        Bxs_trunc[i] = Bxs[i] & ~trunc;
-        //Bxs_trunc[i] = Bxs[i];
+        //Bxs_trunc[i] = Bxs[i] & ~trunc;
+        Bxs_trunc[i] = Bxs[i];
         for(j=0; j<WIDTH; j++) begin
             bp[j*NUM_INPUTS+i] = tzds[i][j];
         end
@@ -163,7 +163,7 @@ module cape_ET_corr #(
 )(
     input clk, rst_n,
     input [WIDTH-1:0] Bxs[NUM_INPUTS-1:0],
-    input [WIDTH-1:0] trunc,
+    //input [WIDTH-1:0] trunc,
     output logic done,
     output logic [NUM_INPUTS-1:0] Xs
 );
@@ -202,8 +202,8 @@ integer i, j;
 always_comb begin
     bp = {WIDTH{1'b1}};
     for(i=0; i<NUM_INPUTS; i++) begin
-        Bxs_trunc[i] = Bxs[i] & ~trunc;
-        //Bxs_trunc[i] = Bxs[i];
+        //Bxs_trunc[i] = Bxs[i] & ~trunc;
+        Bxs_trunc[i] = Bxs[i];
         for(j=0; j<WIDTH; j++) begin
             bp[j] &= tzds[i][j];
         end

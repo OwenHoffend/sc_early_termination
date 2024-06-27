@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-`include "lfsr_polys.sv"
+`include "rtl/lfsr_polys.sv"
 import lfsr_polys_pkg::*;
 
 module lfsr_sng #(
