@@ -48,10 +48,10 @@ end
 endmodule
 
 module lfsr_sng_corr #(
-    parameter WIDTH = 8,
-    parameter LFSR_POLY = LFSR_8_POLYS[0], //x^8 + x^4 + x^3 + x^2 + 1 --> 0001 1101 --> 1D (MSB is inferred)
+    parameter WIDTH = 10,
+    parameter LFSR_POLY = LFSR_10_POLYS[0], //x^8 + x^4 + x^3 + x^2 + 1 --> 0001 1101 --> 1D (MSB is inferred)
     parameter START_STATE = 1,
-    parameter NUM_INPUTS = 1
+    parameter NUM_INPUTS = 4
 )(
     input clk, rst_n,
     input [WIDTH-1:0] Bxs[NUM_INPUTS-1:0],

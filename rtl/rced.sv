@@ -9,6 +9,13 @@ module rced(
     assign z = c ? mux1 : mux2;
 endmodule
 
+module and_gate(input x, input y, output logic z); 
+    assign z = x & y; 
+endmodule
+
+module mux_gate(input x, input y, input s, output logic z);
+    assign z = s ? x : y;
+endmodule
 
 //Unfinished work
 /*
@@ -26,16 +33,17 @@ logic c;
 
 generate
     if(SNG_TYPE == "LFSR") begin
-        lfsr_sng #(
+        lfsr_sng_corr #(
             .WIDTH(WIDTH),
             .NUM_INPUTS(4)
         )(
-
+            .clk(clk),
+            .rst_n(rst_n),
+            .Bxs(Bxs),
+            .Xs(Xs)
         );
-    end else if(SNG_TYPE == "CAPE") begin
-
     end else begin
-        
+
     end
 endgenerate
 

@@ -158,8 +158,8 @@ end
 endmodule
 
 module cape_ET_corr #(
-    parameter WIDTH = 8,
-    parameter NUM_INPUTS = 1
+    parameter WIDTH = 10,
+    parameter NUM_INPUTS = 4
 )(
     input clk, rst_n,
     input [WIDTH-1:0] Bxs[NUM_INPUTS-1:0],

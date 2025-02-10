@@ -10,7 +10,7 @@ parameter NUM_INPUTS = 2;
 logic clk;
 logic rst_n;
 logic [WIDTH-1:0] Bxs[NUM_INPUTS];
-logic [WIDTH-1:0] trunc;
+//logic [WIDTH-1:0] trunc;
 logic done;
 logic [NUM_INPUTS-1:0] Xs;
 
@@ -48,7 +48,7 @@ endtask
         .clk(clk),
         .rst_n(rst_n),
         .Bxs(Bxs_flat),
-        .trunc(trunc),
+        //.trunc(trunc),
         .done(done),
         .Xs(Xs)
     );
@@ -60,7 +60,7 @@ endtask
         .clk(clk),
         .rst_n(rst_n),
         .Bxs(Bxs),
-        .trunc(trunc),
+        //.trunc(trunc),
         .done(done),
         .Xs(Xs)
     );
@@ -78,11 +78,12 @@ task reset();
 endtask
 
 initial begin
-    trunc = 0;
+    //trunc = 0;
     begin_SC_test({{4'b1100}, {4'b1000}}); //0.75, 0.5 (length of 8)
     begin_SC_test({{4'b1101}, {4'b1001}}); //0.8125, 0.5625 (length of 256)
-    trunc = 4'b0001;
-    begin_SC_test({{4'b1101}, {4'b1001}}); //0.75, 0.5 (length of 8) after trunc
+    begin_SC_test({{4'b0101}, {4'b0000}}); //0.3125, 0.0 (length of 16)
+    //trunc = 4'b0001;
+    //begin_SC_test({{4'b1101}, {4'b1001}}); //0.75, 0.5 (length of 8) after trunc
 
     $finish;
 end

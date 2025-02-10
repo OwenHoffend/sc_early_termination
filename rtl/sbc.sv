@@ -1,5 +1,5 @@
 module sbc #(
-    parameter WIDTH = 8
+    parameter WIDTH = 10
 ) (
     input clk, rst_n, pz,
     output logic [WIDTH-1:0] Bz
@@ -21,6 +21,7 @@ end
 
 endmodule
 
+//Required for a more detailed analysis - low priority
 module ret_sbc #(
     parameter WIDTH = 8
 ) (

@@ -47,7 +47,7 @@ assign done = (cycle_count == 2.0 ** WIDTH);
         end
     end
 
-    lfsr_sng dut (
+    lfsr_sng_corr dut (
         .clk(clk),
         .rst_n(rst_n),
         .Bxs(Bxs_flat),
