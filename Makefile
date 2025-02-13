@@ -5,10 +5,15 @@ LIB = ./lib/FreePDK45/osu_soc/lib/files/gscl45nm.v
 MOD_FOLDER = ./rtl
 TB_FOLDER = ./tb
 SYNTH_FOLDER = ./synth
-MOD_NAME = sbc
+MOD_NAME = vsbc
 
-SIMFILES = $(wildcard ./$(MOD_FOLDER)/*.sv)
-SIMFILES += verilog-lfsr/rtl/lfsr.v
+#SIMFILES = $(wildcard ./$(MOD_FOLDER)/*.sv)
+#SIMFILES += verilog-lfsr/rtl/lfsr.v
+#SIMFILES = ./$(MOD_FOLDER)/lzd.sv
+#SIMFILES += ./$(MOD_FOLDER)/tzd.sv
+#SIMFILES += ./$(MOD_FOLDER)/prb.sv
+#SIMFILES += ./$(MOD_FOLDER)/therm_to_onehot.sv
+SIMFILES += ./$(MOD_FOLDER)/vsbc.sv
 
 TESTBENCH = $(TB_FOLDER)/$(MOD_NAME)_tb.sv
 

@@ -11,22 +11,23 @@ module prb #(
 );
 
 logic [W-1:0] tzds[S_GROUPS-1:0];
+logic [W-1:0] Bx_or;
+logic [W-1:0] ell;
+
 generate
     if(CORR==0) begin
-        tzd #(.W(W)) tzd_gen[N-1:0] (
+        tzd #(.W(W)) tzd_uncorr[N-1:0] (
             .Bx(Bxs),
             .z(tzds)
         );
     end else begin
-        tzd #(.W(W)) tzd1 (
+        tzd #(.W(W)) tzd_corr (
             .Bx(Bx_or),
-            .z(tzds)
+            .z(tzds[0])
         );
     end
 endgenerate
 
-logic Bx_or [W-1:0];
-logic [W-1:0] ell;
 lzd #(.W(W)) lzd1 (
     .Bx(Bx_or),
     .z(ell)
@@ -41,8 +42,15 @@ always_comb begin
         end
     end
     for(i=0; i<S_GROUPS; i++) begin
-        S[i] = tzds[i] | ell[i];
+        S[i] = tzds[i] | ell;
     end
 end
+
+therm_to_onehot #(
+    .W         (W)
+) u_therm_to_onehot (
+    .therm     (ell),
+    .onehot    (k_init)
+);
 
 endmodule

@@ -4,7 +4,10 @@ module therm_to_onehot #(parameter W=8)(
     output logic [W-1:0] onehot
 );
 
-assign onehot[W-2:0] = ~therm[W-2:0] & {1'b1, therm[W-3:0]};
-assign onehot[W-1] = therm[W-1];
+always_comb begin
+    onehot[W-1] = ~therm[W-1];
+    onehot[W-2:0] = therm[W-1:1] & ~therm[W-2:0];
+    onehot[0] |= therm[0];
+end
 
 endmodule
