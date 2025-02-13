@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-module bypass_ctr #(parameter WIDTH=8)(
+module bpc #(parameter WIDTH=8)(
     input clk, rst_n,
     input [WIDTH-1:0] bp,
     output logic ovf,
