@@ -1,18 +1,34 @@
 `timescale 1ns / 1ps
 module pret #(
-    parameter W=8,
-    parameter N=8,
-    parameter NC=0,
-    parameter CORR=0,
+    parameter W,
+    parameter N,
+    parameter NC,
+    parameter CORR,
     localparam TW = CORR ? W + NC : W*N+NC,
     localparam S_GROUPS = CORR ? 1 : N
 )(
     input clk, rst_n,
     input [W-1:0] Bxs [N-1:0],
-    output logic [N-1:0] X,
+    output logic [N-1:0] Xs,
+    output logic [NC-1:0] Xcs,
     input Z, 
     output logic [TW-1:0] Bz,
     output logic done
+);
+
+logic [W-1:0] S[S_GROUPS-1:0];
+logic [W-1:0] k_init;
+logic rshift;
+
+prb #(
+    .W           (W),
+    .N           (N),
+    .S_GROUPS    (S_GROUPS),
+    .CORR        (CORR)
+) u_prb (
+    .Bxs         (Bxs),
+    .S           (S),
+    .k_init      (k_init)
 );
 
 bpc_sng #(
@@ -32,6 +48,14 @@ bpc_sng #(
     .done            (done)
 );
 
+clk_pow2_pulse #(
+    .TW       (TW)
+) u_clk_pow2_pulse (
+    .clk      (clk),
+    .rst_n    (rst_n),
+    .pulse    (rshift)
+);
+
 vsbc #(
     .W         (W),
     .TW        (TW)
@@ -43,6 +67,5 @@ vsbc #(
     .k_init    (k_init),
     .Bz        (Bz)
 );
-
 
 endmodule

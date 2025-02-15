@@ -33,6 +33,8 @@ initial begin
     #10 log();
     Bxs = {6'b000000, 6'b000000};
     #10 log();
+    Bxs = {6'b100000, 6'b100000};
+    #10 log();
     #10 $finish;
 end
 

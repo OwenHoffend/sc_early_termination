@@ -44,6 +44,7 @@ always_comb begin
     for(i=0; i<S_GROUPS; i++) begin
         S[i] = tzds[i] | ell;
     end
+    $display("Bxs: {%b, %b}, S: {%b, %b}, k_init: %b", Bxs[0], Bxs[1], S[0], S[1], k_init);
 end
 
 therm_to_onehot #(

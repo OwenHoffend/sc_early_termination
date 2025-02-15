@@ -15,14 +15,14 @@ logic [TW:0] kshreg, next_kshreg;
 always_ff @(posedge clk or negedge rst_n) begin
     if(!rst_n) begin
         cshreg <= 0;
-        kshreg <= {1'b0, k_init, {(TW-W){1'b0}}};
+        kshreg <= {k_init, {(TW-W+1){1'b0}}};
     end else begin
         cshreg <= next_cshreg;
         kshreg <= next_kshreg;
     end
 end
 
-assign Bz = cshreg;
+assign Bz = cshreg[TW-1:0];
 
 always_comb begin
     next_cshreg = Z ? cshreg + kshreg : cshreg;
@@ -31,6 +31,7 @@ always_comb begin
         next_cshreg = {1'b0, next_cshreg[TW:1]};
         next_kshreg = {1'b0, next_kshreg[TW:1]};
     end
+    //$display("time: %0t, Z: %b, rshift: %b, cshreg: %b, next_cshreg: %b, kshreg: %b, next_kshreg: %b", $time, Z, rshift, cshreg, next_cshreg, kshreg, next_kshreg);
 end
 
 endmodule

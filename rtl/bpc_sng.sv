@@ -20,7 +20,8 @@ always_comb begin
     for(i=0; i<S_GROUPS; i++) begin
         S_flat[i*W +: W] = S[i];
     end
-    S_flat[TW-1 -: NC] = {NC{1'b0}};
+    if(NC > 0)
+        S_flat[TW-1:TW-1-NC] = '0;
 end
 
 logic [TW-1:0] cnt;
@@ -35,7 +36,7 @@ bpc #(.WIDTH(TW)) bpc1(
 integer j;
 always_comb begin
     for(j=0; j<N; j++) begin
-        Xs[j] = cnt[(j * CORR)*W +: W] < Bxs[j];
+        Xs[j] = cnt[(j * (1-CORR))*W +: W] < Bxs[j];
     end
     for(j=0; j<NC; j++) begin
         Xcs[j] = cnt[TW-NC+j];
