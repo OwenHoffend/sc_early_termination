@@ -5,7 +5,7 @@ LIB = ./lib/FreePDK45/osu_soc/lib/files/gscl45nm.v
 MOD_FOLDER = ./rtl
 TB_FOLDER = ./tb
 SYNTH_FOLDER = ./synth
-MOD_NAME = pret
+MOD_NAME = rced_lfsr
 
 SIMFILES = $(wildcard ./$(MOD_FOLDER)/*.sv)
 SIMFILES += verilog-lfsr/rtl/lfsr.v
@@ -16,6 +16,8 @@ SIMFILES += verilog-lfsr/rtl/lfsr.v
 #SIMFILES += ./$(MOD_FOLDER)/vsbc.sv
 #SIMFILES += ./$(MOD_FOLDER)/bpc.sv
 #SIMFILES += ./$(MOD_FOLDER)/bpc_sng.sv
+#SIMFILES += ./$(MOD_FOLDER)/lfsr_polys.sv
+#SIMFILES += ./$(MOD_FOLDER)/lfsr_sng.sv
 
 TESTBENCH = $(TB_FOLDER)/$(MOD_NAME)_tb.sv
 

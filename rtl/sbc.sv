@@ -1,11 +1,11 @@
 module sbc #(
-    parameter WIDTH = 10
+    parameter TW
 ) (
-    input clk, rst_n, pz,
-    output logic [WIDTH-1:0] Bz
+    input clk, rst_n, Z,
+    output logic [TW-1:0] Bz
 );
 
-logic [WIDTH-1:0] next_Bz;
+logic [TW-1:0] next_Bz;
 
 always_ff @(posedge clk or negedge rst_n) begin
     if(!rst_n) begin
@@ -16,7 +16,10 @@ always_ff @(posedge clk or negedge rst_n) begin
 end
 
 always_comb begin
-    next_Bz = Bz + 1;
+    if(Z)
+        next_Bz = Bz + 1;
+    else
+        next_Bz = Bz;
 end
 
 endmodule

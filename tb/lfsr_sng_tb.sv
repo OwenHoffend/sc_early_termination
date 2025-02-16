@@ -1,21 +1,27 @@
 `timescale 1ns / 1ps
-
+`include "rtl/lfsr_polys.sv"
+import lfsr_polys_pkg::*;
 module lfsr_sng_tb;
 
 // Parameters
-parameter WIDTH = 8;
-parameter NUM_INPUTS = 2;
+parameter W = 8;
+parameter N = 2;
+parameter NC = 0;
 parameter START_STATE = 1;
+parameter LFSR_POLY = LFSR_8_POLYS[0]; //x^8 + x^4 + x^3 + x^2 + 1 --> 0001 1101 --> 1D (MSB is inferred)
+parameter LFSR_CONST_POLY = LFSR_4_POLYS[0];
+parameter CORR = 1;
 
 // Signals
 logic clk;
 logic rst_n;
-logic [WIDTH-1:0] Bxs[NUM_INPUTS-1:0];
+logic [W-1:0] Bxs[N-1:0];
 logic done;
-logic [NUM_INPUTS-1:0] Xs;
+logic [N-1:0] Xs;
+logic [NC-1:0] Xcs;
 
 //Detect output probabilities
-real out_cnts[NUM_INPUTS-1:0];
+real out_cnts[N-1:0];
 real cycle_count;
 always @(posedge clk) begin
     cycle_count += 1.0;
@@ -26,9 +32,9 @@ always @(posedge clk) begin
     end
 end
 
-task begin_SC_test(input [WIDTH-1:0] Bxs_inst[NUM_INPUTS-1:0]);
+task begin_SC_test(input [W-1:0] Bxs_inst[N-1:0]);
     Bxs = Bxs_inst;
-    out_cnts = '{NUM_INPUTS{0.0}};
+    out_cnts = '{N{0.0}};
     cycle_count = 0.0;
     reset();
 
@@ -36,35 +42,23 @@ task begin_SC_test(input [WIDTH-1:0] Bxs_inst[NUM_INPUTS-1:0]);
 endtask
 
 //LFSR doesn't have dedicated done signal
-assign done = (cycle_count == 2.0 ** WIDTH);
+assign done = (cycle_count == 2.0 ** W);
 
-// Instantiate the lfsr module
-`ifdef SYNTHESIS
-    logic [NUM_INPUTS*WIDTH-1:0] Bxs_flat;
-    always_comb begin
-        foreach(Bxs[i, j]) begin
-            Bxs_flat[i*WIDTH+j] = Bxs[i][j];
-        end
-    end
-
-    lfsr_sng dut (
-        .clk(clk),
-        .rst_n(rst_n),
-        .Bxs(Bxs_flat),
-        .Xs(Xs)
-    );
-`else
-    lfsr_sng #(
-        .WIDTH(WIDTH),
-        .NUM_INPUTS(NUM_INPUTS),
-        .START_STATE(START_STATE)
-    ) dut (
-        .clk(clk),
-        .rst_n(rst_n),
-        .Bxs(Bxs),
-        .Xs(Xs)
-    );
-`endif
+lfsr_sng #(
+    .W                  (W),
+    .N                  (N),
+    .NC                 (NC),
+    .LFSR_POLY          (LFSR_POLY),
+    .LFSR_CONST_POLY    (LFSR_CONST_POLY),
+    .START_STATE        (START_STATE),
+    .CORR               (CORR)
+) u_lfsr_sng (
+    .clk                (clk),
+    .rst_n              (rst_n),
+    .Bxs                (Bxs),
+    .Xs                 (Xs),
+    .Xcs                (Xcs)
+);
 
 // Clock generation
 always #5 clk = ~clk;

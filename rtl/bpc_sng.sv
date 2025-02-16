@@ -15,9 +15,8 @@ module bpc_sng #(
 );
 
 logic [TW-1:0] S_flat;
-integer i;
 always_comb begin
-    for(i=0; i<S_GROUPS; i++) begin
+    for(int i=0; i<S_GROUPS; i++) begin
         S_flat[i*W +: W] = S[i];
     end
     if(NC > 0)
@@ -33,13 +32,12 @@ bpc #(.WIDTH(TW)) bpc1(
     .cnt(cnt)
 );
 
-integer j;
 always_comb begin
-    for(j=0; j<N; j++) begin
-        Xs[j] = cnt[(j * (1-CORR))*W +: W] < Bxs[j];
+    for(int i=0; i<N; i++) begin
+        Xs[i] = cnt[(i * (1-CORR))*W +: W] < Bxs[i];
     end
-    for(j=0; j<NC; j++) begin
-        Xcs[j] = cnt[TW-NC+j];
+    for(int i=0; i<NC; i++) begin
+        Xcs[i] = cnt[TW-NC+i];
     end
 end
 

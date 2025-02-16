@@ -24,7 +24,7 @@ set my_toplevel $mod_name
 set my_clock_pin clk
 
 #/* Target frequency in MHz for optimization       */
-set my_clk_freq_MHz 100
+set my_clk_freq_MHz 500
 
 #/* Delay of input signals (Clock-to-Q, Package etc.)  */
 set my_input_delay_ns 0.1
