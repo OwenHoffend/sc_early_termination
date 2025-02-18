@@ -3,7 +3,7 @@ module pret_tb;
 
 parameter W = 6;
 parameter N = 2;
-parameter NC = 0;
+parameter NC = 1;
 parameter CORR = 0;
 parameter TW = CORR ? W+NC : W*N+NC;
 
@@ -33,7 +33,7 @@ pret #(
 
 //Target application circuit
 always_comb begin
-    Z = Xs[0] & Xs[1];
+    Z = Xcs[0] ? Xs[0] : Xs[1];
 end
 
 always #5 clk = ~clk;
@@ -51,7 +51,7 @@ always @(posedge clk) begin
 end
 
 initial begin
-    Bxs = {6'b101000, 6'b010000};
+    Bxs = {6'b110000, 6'b010000};
     clk = 0;
     reset();
     wait(done); #20;

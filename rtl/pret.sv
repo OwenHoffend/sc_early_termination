@@ -17,8 +17,7 @@ module pret #(
 );
 
 logic [W-1:0] S[S_GROUPS-1:0];
-logic [W-1:0] k_init;
-logic rshift;
+logic [W-1:0] ell;
 
 prb #(
     .W           (W),
@@ -28,7 +27,7 @@ prb #(
 ) u_prb (
     .Bxs         (Bxs),
     .S           (S),
-    .k_init      (k_init)
+    .ell         (ell)
 );
 
 bpc_sng #(
@@ -48,24 +47,18 @@ bpc_sng #(
     .done            (done)
 );
 
-clk_pow2_pulse #(
-    .TW       (TW)
-) u_clk_pow2_pulse (
-    .clk      (clk),
-    .rst_n    (rst_n),
-    .pulse    (rshift)
-);
-
-vsbc #(
-    .W         (W),
-    .TW        (TW)
-) u_vsbc (
-    .clk       (clk),
-    .rst_n     (rst_n),
-    .Z         (Z),
-    .rshift    (rshift),
-    .k_init    (k_init),
-    .Bz        (Bz)
+vsbc_comb #(
+    .W           (W),
+    .TW          (TW),
+    .NC          (NC),
+    .S_GROUPS    (S_GROUPS)
+) u_vsbc_comb (
+    .clk         (clk),
+    .rst_n       (rst_n),
+    .Z           (Z),
+    .S           (S),
+    .ell         (ell),
+    .Bz          (Bz)
 );
 
 endmodule

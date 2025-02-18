@@ -7,12 +7,11 @@ module prb #(
 )(
     input [W-1:0] Bxs[N-1:0],
     output logic [W-1:0] S[S_GROUPS-1:0],
-    output logic [W-1:0] k_init
+    output logic [W-1:0] ell
 );
 
 logic [W-1:0] tzds[S_GROUPS-1:0];
 logic [W-1:0] Bx_or;
-logic [W-1:0] ell;
 
 generate
     if(CORR==0) begin
@@ -44,14 +43,7 @@ always_comb begin
     for(i=0; i<S_GROUPS; i++) begin
         S[i] = tzds[i] | ell;
     end
-    //$display("Bxs: {%b, %b}, S: {%b, %b}, k_init: %b", Bxs[0], Bxs[1], S[0], S[1], k_init);
+    $display("Bxs: {%b, %b}, S: {%b, %b}", Bxs[0], Bxs[1], S[0], S[1]);
 end
-
-therm_to_onehot #(
-    .W         (W)
-) u_therm_to_onehot (
-    .therm     (ell),
-    .onehot    (k_init)
-);
 
 endmodule

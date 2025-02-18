@@ -5,17 +5,22 @@ LIB = ./lib/FreePDK45/osu_soc/lib/files/gscl45nm.v
 MOD_FOLDER = ./rtl
 TB_FOLDER = ./tb
 SYNTH_FOLDER = ./synth
-MOD_NAME = rced_lfsr
+MOD_NAME = mac_pret
 
 SIMFILES = $(wildcard ./$(MOD_FOLDER)/*.sv)
 SIMFILES += verilog-lfsr/rtl/lfsr.v
-#SIMFILES = ./$(MOD_FOLDER)/lzd.sv
+#SIMFILES += ./$(MOD_FOLDER)/apc.sv
+#SIMFILES += ./$(MOD_FOLDER)/sbc.sv
+#SIMFILES += ./$(MOD_FOLDER)/barrel_shift.sv
+#SIMFILES += ./$(MOD_FOLDER)/lzd.sv
 #SIMFILES += ./$(MOD_FOLDER)/tzd.sv
 #SIMFILES += ./$(MOD_FOLDER)/prb.sv
 #SIMFILES += ./$(MOD_FOLDER)/therm_to_onehot.sv
 #SIMFILES += ./$(MOD_FOLDER)/vsbc.sv
+#SIMFILES += ./$(MOD_FOLDER)/vsbc_comb.sv
 #SIMFILES += ./$(MOD_FOLDER)/bpc.sv
 #SIMFILES += ./$(MOD_FOLDER)/bpc_sng.sv
+#SIMFILES += ./$(MOD_FOLDER)/pret.sv
 #SIMFILES += ./$(MOD_FOLDER)/lfsr_polys.sv
 #SIMFILES += ./$(MOD_FOLDER)/lfsr_sng.sv
 

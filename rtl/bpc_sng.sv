@@ -20,7 +20,7 @@ always_comb begin
         S_flat[i*W +: W] = S[i];
     end
     if(NC > 0)
-        S_flat[TW-1:TW-1-NC] = '0;
+        S_flat[TW-1:TW-1-(NC-1)] = '0;
 end
 
 logic [TW-1:0] cnt;
